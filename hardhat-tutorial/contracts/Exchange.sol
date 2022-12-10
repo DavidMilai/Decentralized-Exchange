@@ -53,6 +53,7 @@ function removeLiquidity(uint _amount) public returns (uint , uint) {
     require(_amount > 0, "_amount should be greater than zero");
     uint ethReserve = address(this).balance;
     uint _totalSupply = totalSupply();
+    // to read
     // The amount of Eth that would be sent back to the user is based
     // on a ratio
     // Ratio is -> (Eth sent back to the user) / (current Eth reserve)
