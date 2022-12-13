@@ -98,4 +98,24 @@ function getAmountOfTokens(
     return numerator / denominator;
 }
 
+function cryptoDevTokenToEth(uint _tokensSold, uint _minEth) public {
+    uint256 tokenReserve = getReserve();
+    // call the `getAmountOfTokens` to get the amount of Eth
+    // that would be returned to the user after the swap
+    uint256 ethBought = getAmountOfTokens(
+        _tokensSold,
+        tokenReserve,
+        address(this).balance
+    );
+    require(ethBought >= _minEth, "insufficient output amount");
+    // Transfer `Crypto Dev` tokens from the user's address to the contract
+    ERC20(cryptoDevTokenAddress).transferFrom(
+        msg.sender,
+        address(this),
+        _tokensSold
+    );
+    // send the `ethBought` to the user from the contract
+    payable(msg.sender).transfer(ethBought);
+}
+
 }
