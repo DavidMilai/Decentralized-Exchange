@@ -118,4 +118,23 @@ function cryptoDevTokenToEth(uint _tokensSold, uint _minEth) public {
     payable(msg.sender).transfer(ethBought);
 }
 
+function ethToCryptoDevToken(uint _minTokens) public payable {
+    uint256 tokenReserve = getReserve();
+    // call the `getAmountOfTokens` to get the amount of Crypto Dev tokens
+    // that would be returned to the user after the swap
+    // Notice that the `inputReserve` we are sending is equal to
+    // `address(this).balance - msg.value` instead of just `address(this).balance`
+    // because `address(this).balance` already contains the `msg.value` user has sent in the given call
+    // so we need to subtract it to get the actual input reserve
+    uint256 tokensBought = getAmountOfTokens(
+        msg.value,
+        address(this).balance - msg.value,
+        tokenReserve
+    );
+
+    require(tokensBought >= _minTokens, "insufficient output amount");
+    // Transfer the `Crypto Dev` tokens to the user
+    ERC20(cryptoDevTokenAddress).transfer(msg.sender, tokensBought);
+}
+
 }
