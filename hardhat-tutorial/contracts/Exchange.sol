@@ -127,8 +127,7 @@ function ethToCryptoDevToken(uint _minTokens) public payable {
     );
 
     require(tokensBought >= _minTokens, "insufficient output amount");
-    // Transfer the `Crypto Dev` tokens to the user
-    ERC20(cryptoDevTokenAddress).transfer(msg.sender, tokensBought);
+     ERC20(cryptoDevTokenAddress).transfer(msg.sender, tokensBought);
 }
 
  
