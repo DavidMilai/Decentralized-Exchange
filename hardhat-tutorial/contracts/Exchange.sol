@@ -110,7 +110,6 @@ function cryptoDevTokenToEth(uint _tokensSold, uint _minEth) public {
     require(ethBought >= _minEth, "insufficient output amount");
 
     // Transfer `Crypto Dev` tokens from the user's address to the contract
-    // Transfer `Crypto Dev` tokens from the user's address to the contract
     ERC20(cryptoDevTokenAddress).transferFrom(
         msg.sender,
         address(this),
