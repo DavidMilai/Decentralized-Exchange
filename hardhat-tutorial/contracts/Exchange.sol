@@ -115,6 +115,8 @@ function cryptoDevTokenToEth(uint _tokensSold, uint _minEth) public {
         address(this),
         _tokensSold
     );
+        // send the `ethBought` to the user from the contract
+
     // send the `ethBought` to the user from the contract
     payable(msg.sender).transfer(ethBought);
 }
