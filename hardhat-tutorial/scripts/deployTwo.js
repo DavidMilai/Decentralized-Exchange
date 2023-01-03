@@ -21,3 +21,5 @@ main()
     console.error(error);
     process.exit(1);
   });
+
+  // deployed contract address is 0xA1E13fDBd3c18B3DD87c8c63D5C1D4AEe90b6e81
