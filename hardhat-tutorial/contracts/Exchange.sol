@@ -48,32 +48,14 @@ contract Exchange is ERC20 {
         return liquidity;
     }
 
-
 function removeLiquidity(uint _amount) public returns (uint , uint) {
     require(_amount > 0, "_amount should be greater than zero");
     uint ethReserve = address(this).balance;
-    uint _totalSupply = totalSupply();
-    // to read
-    // The amount of Eth that would be sent back to the user is based
-    // on a ratio
-    // Ratio is -> (Eth sent back to the user) / (current Eth reserve)
-    // = (amount of LP tokens that user wants to withdraw) / (total supply of LP tokens)
-    // Then by some maths -> (Eth sent back to the user)
-    // = (current Eth reserve * amount of LP tokens that user wants to withdraw) / (total supply of LP tokens)
-    uint ethAmount = (ethReserve * _amount)/ _totalSupply;
-    // The amount of Crypto Dev token that would be sent back to the user is based
-    // on a ratio
-    // Ratio is -> (Crypto Dev sent back to the user) / (current Crypto Dev token reserve)
-    // = (amount of LP tokens that user wants to withdraw) / (total supply of LP tokens)
-    // Then by some maths -> (Crypto Dev sent back to the user)
-    // = (current Crypto Dev token reserve * amount of LP tokens that user wants to withdraw) / (total supply of LP tokens)
-    uint cryptoDevTokenAmount = (getReserve() * _amount)/ _totalSupply;
-    // Burn the sent LP tokens from the user's wallet because they are already sent to
-    // remove liquidity
+    uint _totalSupply = totalSupply(); 
+    uint ethAmount = (ethReserve * _amount)/ _totalSupply; 
+    uint cryptoDevTokenAmount = (getReserve() * _amount)/ _totalSupply; 
     _burn(msg.sender, _amount);
-    // Transfer `ethAmount` of Eth from the contract to the user's wallet
     payable(msg.sender).transfer(ethAmount);
-    // Transfer `cryptoDevTokenAmount` of Crypto Dev tokens from the contract to the user's wallet
     ERC20(cryptoDevTokenAddress).transfer(msg.sender, cryptoDevTokenAmount);
     return (ethAmount, cryptoDevTokenAmount);
 }
@@ -83,16 +65,8 @@ function getAmountOfTokens(
     uint256 inputReserve,
     uint256 outputReserve
 ) public pure returns (uint256) {
-    require(inputReserve > 0 && outputReserve > 0, "invalid reserves");
-    // We are charging a fee of `1%`
-    // Input amount with fee = (input amount - (1*(input amount)/100)) = ((input amount)*99)/100
-    uint256 inputAmountWithFee = inputAmount * 99;
-    // Because we need to follow the concept of `XY = K` curve
-    // We need to make sure (x + Δx) * (y - Δy) = x * y
-    // So the final formula is Δy = (y * Δx) / (x + Δx)
-    // Δy in our case is `tokens to be received`
-    // Δx = ((input amount)*99)/100, x = inputReserve, y = outputReserve
-    // So by putting the values in the formulae you can get the numerator and denominator
+    require(inputReserve > 0 && outputReserve > 0, "invalid reserves"); 
+    uint256 inputAmountWithFee = inputAmount * 99; 
     uint256 numerator = inputAmountWithFee * outputReserve;
     uint256 denominator = (inputReserve * 100) + inputAmountWithFee;
     return numerator / denominator;
