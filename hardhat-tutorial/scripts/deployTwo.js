@@ -22,4 +22,7 @@ main()
     process.exit(1);
   });
 
-  // deployed contract address is 0xA1E13fDBd3c18B3DD87c8c63D5C1D4AEe90b6e81
+  // npx hardhat run scripts/deployTwo.js --network goerli
+  // deployed contract address one is 0xA1E13fDBd3c18B3DD87c8c63D5C1D4AEe90b6e81
+    // deployed contract address two is 0x76628FdCaabD91CD2A1092A8cd5D68161820386C
+
