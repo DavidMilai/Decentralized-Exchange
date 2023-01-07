@@ -1,9 +1,10 @@
-import { BigNumber, providers, utils } from "ethers";
 import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 import styles from "../styles/Home.module.css";
 import { addLiquidity, calculateCD } from "../utils/addLiquidity";
+import { BigNumber, providers, utils } from "ethers";
+
 import {
   getCDTokensBalance,
   getEtherBalance,
