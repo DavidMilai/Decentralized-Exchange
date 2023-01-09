@@ -78,5 +78,7 @@ export const swapTokens = async (
       tokenToBeReceivedAfterSwap
     );
   }
+  // await tx.wait();
   await tx.wait();
+
 };
