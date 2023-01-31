@@ -19,7 +19,7 @@ contract Lock {
 
     function withdraw() public {
 
-        require(block.timestamp >= unlockTime, "You can't withdraw yet");
+        require(block.timestamp >= unlockTime, "You can not withdraw yet");
         require(msg.sender == owner, "You aren't the owner");
 
         emit Withdrawal(address(this).balance, block.timestamp);
